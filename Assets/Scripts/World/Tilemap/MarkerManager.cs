@@ -32,8 +32,7 @@ namespace TilemapScripts
         #region Fields
         public static MarkerManager instance;
 
-        [Header("Dependencies")]
-        [SerializeField] Reader tileMapReader;
+        [HideInInspector] Reader tileMapReader;
 
         [Header("Tilemaps")]
         [SerializeField] Tilemap markerTilemap;

@@ -8,8 +8,7 @@ namespace Inventory
     {
         #region Fields
 
-        [Header("Manager References")]
-        public Manager inventoryManager;
+        [HideInInspector] public Manager inventoryManager;
 
         [Header("Prefabs")]
         public GameObject inventoryItemPrefab;

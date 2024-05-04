@@ -9,6 +9,8 @@ namespace Player
 {
     public class UIManager : MonoBehaviour
     {
+        #region Fields
+
         [Header("UI References")]
         public GameObject _mainInvWholeCon;
         public GameObject _mainInvHalfCon;
@@ -29,12 +31,18 @@ namespace Player
         public bool isEquipmentOpen = false;
         public bool isMenuOpen = false;
 
+        #endregion
+
+        #region Main
+
         // Update is called once per frame
         public void HandleUIInteractions()
         {
             KeypressChecks();
             StateCheck();
         }
+
+        #endregion
 
         #region Open Menus
         /// <summary>
@@ -96,9 +104,9 @@ namespace Player
             isCraftingOpen = _craftingUI.activeSelf;
             isEquipmentOpen = _equipmentUI.activeSelf;
 
-            _craftBtn.enabled = isCraftingOpen;
-            _inventoryBtn.enabled = isInventoryOpen;
-            _equipBtn.enabled = isEquipmentOpen;
+            if (isCraftingOpen) { _craftBtn.Select(); }
+            if (isInventoryOpen) { _inventoryBtn.Select(); }
+            if (isEquipmentOpen) { _equipBtn.Select(); }
 
             if(isInventoryOpen || isCraftingOpen || isEquipmentOpen)
             {
@@ -111,19 +119,19 @@ namespace Player
         {
             if (Keyboard.current.iKey.wasReleasedThisFrame)
             {
-                Debug.Log("I Pressed");
+                //Debug.Log("I Pressed");
                 OpenInventory();
             }
 
             if (Keyboard.current.cKey.wasReleasedThisFrame)
             {
-                Debug.Log("C Pressed");
+                //Debug.Log("C Pressed");
                 OpenCraftingMenu();
             }
 
             if (Keyboard.current.eKey.wasReleasedThisFrame)
             {
-                Debug.Log("E Pressed");
+                //Debug.Log("E Pressed");
                 OpenEquipMenu();
             }
         }

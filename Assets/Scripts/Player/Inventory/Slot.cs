@@ -9,16 +9,10 @@ namespace Inventory
         public Inventory.Item item;
         public Image image;
         public Color selectedColor, notSelectedColor;
-        public bool craftingSlot = false;
 
         private void Awake()
         {
             Deselect();
-
-            if (craftingSlot == false)
-            {
-                GetComponent<Button>().interactable = false;
-            }
         }
 
         #region Selection

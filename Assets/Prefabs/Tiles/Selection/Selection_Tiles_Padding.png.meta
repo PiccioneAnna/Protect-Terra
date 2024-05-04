@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Selection_Tiles_Padding_0
+      name: Selection_Default
       rect:
         serializedVersion: 2
         x: 64
@@ -118,7 +118,7 @@ TextureImporter:
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -131,7 +131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Selection_Tiles_Padding_1
+      name: Selection_Disabled
       rect:
         serializedVersion: 2
         x: 256
@@ -139,7 +139,7 @@ TextureImporter:
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -152,7 +152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Selection_Tiles_Padding_2
+      name: Selection_Valid
       rect:
         serializedVersion: 2
         x: 64
@@ -160,7 +160,7 @@ TextureImporter:
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Selection_Tiles_Padding_3
+      name: Selection_Invalid
       rect:
         serializedVersion: 2
         x: 256
@@ -181,7 +181,7 @@ TextureImporter:
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -204,10 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Selection_Tiles_Padding_0: -1262185092
-      Selection_Tiles_Padding_1: 1935737919
-      Selection_Tiles_Padding_2: 585077324
-      Selection_Tiles_Padding_3: -383347762
+      Selection_Default: -1262185092
+      Selection_Disabled: 1935737919
+      Selection_Invalid: -383347762
+      Selection_Valid: 585077324
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
