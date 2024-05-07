@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Scene Specific")]
     public EnviroSpawner enviroSpawner;
+    public Tilemap tm;
 
     [Header("Global")]
     public GameObject itemVisual; // for always having item infront of all UI
@@ -59,10 +60,21 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+        SetPosition();
     }
 
     #endregion
+
+    public void SetPosition()
+    {
+        tm = GameObject.Find("0").GetComponent<Tilemap>();
+        Collider2D col = tm.gameObject.GetComponent<Collider2D>();
+
+        Vector3 pos = new Vector3Int(75, 75, 0);
+        pos = col.ClosestPoint(pos);
+
+        player.gameObject.transform.position = pos;
+    }
 
     #region Helpers
 

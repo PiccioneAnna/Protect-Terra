@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Game Loop.unity
+    guid: b453542afd1a25d4bac36e668e3e6d32
+  - enabled: 1
+    path: Assets/Scenes/Persistents.unity
+    guid: 733d43d0a1e6a2f4b8e6beb731b19348
   m_configObjects: {}

@@ -1097,7 +1097,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
+  m_ScaleFactor: 0.8
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
@@ -2577,6 +2577,7 @@ MonoBehaviour:
   player: {fileID: 1471545990}
   markerManager: {fileID: 0}
   enviroSpawner: {fileID: 0}
+  tm: {fileID: 0}
   itemVisual: {fileID: 0}
   tilemapInfoManager: {fileID: 0}
   reader: {fileID: 0}
@@ -7776,7 +7777,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 959.1271, y: 533.8897}
+  m_AnchoredPosition: {x: 962, y: 534}
   m_SizeDelta: {x: 1868.4889, y: 1016.5418}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1790154578
@@ -8821,6 +8822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1941526192}
   - component: {fileID: 1941526193}
+  - component: {fileID: 1941526194}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -8883,6 +8885,21 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1855383273}
+--- !u!114 &1941526194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941526191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f453f694addf4275988fac205bc91968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BoundingShape2D: {fileID: 0}
+  m_Damping: 0.5
+  m_MaxWindowSize: -1
 --- !u!1 &1944343988
 GameObject:
   m_ObjectHideFlags: 0
