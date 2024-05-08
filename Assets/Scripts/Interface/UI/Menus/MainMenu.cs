@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartNewGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Home", LoadSceneMode.Single);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Game Loop", LoadSceneMode.Single);
         UnityEngine.SceneManagement.SceneManager.LoadScene("Persistents", LoadSceneMode.Additive);
     }
 

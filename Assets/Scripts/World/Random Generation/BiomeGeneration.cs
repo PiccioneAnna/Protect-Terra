@@ -58,9 +58,11 @@ public class BiomeGeneration : MonoBehaviour
     {
         ClearTilemaps();
         PopulateUnderground();
+        PopulateGrass();
 
         TilemapGenerator.PopulateTilemap(_tilemap0_dirt, dirtarray, dirt);
         TilemapGenerator.PopulateTilemap(_tilemap1_water, waterarray, water);
+        TilemapGenerator.PopulateTilemap(_tilemap1_grass, grassarray, grass);
 
     }
 
@@ -87,8 +89,22 @@ public class BiomeGeneration : MonoBehaviour
         }
 
         TilemapGenerator.PopulateTilemap(_tilemap_under, temp, dirt);
+    }
 
-        GameObject.Find("Virtual Camera").GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = _tilemap_under.GetComponent<CompositeCollider2D>();
+    public void PopulateGrass()
+    {
+        int[,] grassremoval = TilemapGenerator.DefineBorderPlacement(dirtarray);
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (dirtarray[x, y] == 1 && grassremoval[x,y] != 1) 
+                {
+                    grassarray[x, y] = 1;
+                }
+            }
+        }
     }
 
     public int[,] CreateInverse(int[,] newtm, int[,] reftm)

@@ -71,6 +71,61 @@ public static class TilemapGenerator
         return caBuffer;
     }
 
+    public static int[,] DefineBorderPlacement(int[,] refArray)
+    {
+        int[,] caBuffer = new int[refArray.GetLength(0), refArray.GetLength(1)];
+
+        for (int x = 0; x < caBuffer.GetLength(0); x++)
+        {
+            for (int y = 0; y < caBuffer.GetLength(1); y++)
+            {
+                if (refArray[x, y] == 1)
+                {
+
+                    if (((y - 2) >= 0)) // 1 up & 1 down within range
+                    {
+                        if ((refArray[x, y - 2] == 0))
+                        {
+                            caBuffer[x, y] = 1;
+                        }
+                    }
+
+                    if ((y + 1) < refArray.GetLength(1)) // 1 up & 1 down within range
+                    {
+                        if ((refArray[x, y + 1] == 0))
+                        {
+                            caBuffer[x, y] = 1;
+                        }
+                    }
+
+                    if (((x - 1) >= 0)) // 1 up & 1 down within range
+                    {
+                        if ((refArray[x - 1, y] == 0))
+                        {
+                            caBuffer[x, y] = 1;
+                        }
+                    }
+
+                    if ((x + 1) < refArray.GetLength(0)) // 1 up & 1 down within range
+                    {
+                        if ((refArray[x + 1, y] == 0))
+                        {
+                            caBuffer[x, y] = 1;
+                        }
+                    }
+
+                    if (caBuffer[x, y] != 1) { caBuffer[x, y] = 0; }
+                }
+                else
+                {
+                    caBuffer[x, y] = 0;
+                }
+            }
+        }
+
+        return caBuffer;
+    }
+
     public static BoundsInt ReturnTilemapInfo(Tilemap tm)
     {
         tm.CompressBounds();
