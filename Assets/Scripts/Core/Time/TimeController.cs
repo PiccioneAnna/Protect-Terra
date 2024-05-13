@@ -8,20 +8,22 @@ using UnityEngine.UI;
 public class TimeController : MonoBehaviour
 {
     const float secondsInDay = 86400f;
-    const float phaseLength = 900f; // 15 minutes in seconds
 
+    [Header("Components References")]
     [SerializeField] Color nightLightColor;
     [SerializeField] AnimationCurve nightTimeCurve;
     [SerializeField] Color dayLightColor = Color.white;
-    [SerializeField] TMP_Text text;
+    [SerializeField] TMP_Text timeText;
+    [SerializeField] TMP_Text dayNumText;
 
     float time;
+    [Header("Stats")]
     [SerializeField] float timeScale = 60f;
     [SerializeField] float startAtTime = 28800f; // in seconds
 
     [SerializeField] UnityEngine.Rendering.Universal.Light2D globalLight;
-    private int days;
-    private int years;
+    public int days = 1;
+    public int years = 1;
 
     List<TimeAgent> agents;
 
@@ -33,6 +35,7 @@ public class TimeController : MonoBehaviour
     private void Start()
     {
         time = startAtTime;
+        TimeAgents();
     }
 
     float Hours
@@ -51,28 +54,20 @@ public class TimeController : MonoBehaviour
         time += Time.deltaTime * timeScale;
 
         TimeValueCalculation();
-        //DayLight();
+        DayLight();
 
         if (time > secondsInDay)
         {
             NextDay();
-        }
-
-        TimeAgents();
+            TimeAgents();
+        }      
     }
 
-    int oldPhase = 0;
     private void TimeAgents()
     {
-        int currentPhase = (int)(time / phaseLength);
-
-        if (oldPhase != currentPhase)
+        for (int i = 0; i < agents.Count; i++)
         {
-            oldPhase = currentPhase;
-            for (int i = 0; i < agents.Count; i++)
-            {
-                agents[i].Invoke();
-            }
+            agents[i].Invoke();
         }
     }
 
@@ -80,7 +75,8 @@ public class TimeController : MonoBehaviour
     {
         int hh = (int)Hours;
         int mm = (int)Minutes;
-        text.text = hh.ToString("00") + ":" + mm.ToString("00");
+
+        timeText.text = hh.ToString("00") + ":" + mm.ToString("00");    
     }
 
     private void DayLight()
@@ -94,6 +90,9 @@ public class TimeController : MonoBehaviour
     {
         time = 0;
         days += 1;
+
+        int d = (int)days;
+        dayNumText.text = d.ToString();
     }
 
     public void Subscribe(TimeAgent timeAgent)
@@ -105,5 +104,4 @@ public class TimeController : MonoBehaviour
     {
         agents.Remove(timeAgent);
     }
-
 }

@@ -39,19 +39,19 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        //if (Instance == null) // If there is no instance already
-        //{
-        //    Instance = this;
-        //}
-        //else if (Instance != this) // If there is already an instance and it's not `this` instance
-        //{
-        //    Destroy(gameObject); // Destroy the GameObject, this component is attached to
-        //}
+        if (Instance == null) // if there is no instance already
+        {
+            Instance = this;
+        }
+        else if (Instance != this) // if there is already an instance and it's not `this` instance
+        {
+            Destroy(gameObject); // destroy the gameobject, this component is attached to
+        }
 
         //inventory = GetComponent<Inventory.Manager>();
         //reader = GetComponent<Reader>();
         //cropsManager = GetComponent<TilemapScripts.CropsManager>();
-        //timeController = GetComponent<TimeController>();
+        timeController = GetComponent<TimeController>();
         //sceneManager = GetComponent<SceneManager>();
         //screenMessageSystem = GetComponent<OnScreenMessageSystem>();
         //placeableObjectsManager = GetComponent<PlaceableObjectsReferenceManager>();

@@ -35,7 +35,7 @@ public class BiomeGeneration : MonoBehaviour
     #endregion
 
     // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
         cellularAutomata = GetComponent<CellularAutomata>();
         cellularAutomata.Set(width, height, fillPercent, liveNeighbors, startingStep, 1);

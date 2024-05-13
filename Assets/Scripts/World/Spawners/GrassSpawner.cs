@@ -9,6 +9,7 @@ public class GrassSpawner : TimeAgent
     [Header("Components")]
     public GameObject grassPrefab;
     public Tilemap refTilemap;
+    public GameObject spawnParent;
 
     [Header("Bounds")]
     public BoundsInt bounds;
@@ -50,7 +51,7 @@ public class GrassSpawner : TimeAgent
     #region Runtime
 
     // Start is called before the first frame update
-    void Start()
+    public void Initial()
     {
         bounds = TilemapGenerator.ReturnTilemapInfo(refTilemap);
         //Debug.Log("Defining bounds and calling spawner");
@@ -61,7 +62,6 @@ public class GrassSpawner : TimeAgent
         SetGradient();
 
         onTimeTick += Tick;
-        Init();
 
         SetInitCellularAutomata();
     }
@@ -96,27 +96,27 @@ public class GrassSpawner : TimeAgent
                 bool inBounds = (indexX < _width && indexY < _height);
                 bool alreadySpawned = spawnedPositions.Contains(pos);
 
-                if (inBounds)
+                if(!inBounds || alreadySpawned) { break; }
+
+                bool filledTile = grassArray[indexX, indexY] == 1;
+
+                if (hasTile)
                 {
-                    bool filledTile = grassArray[indexX, indexY] == 1;
-
-                    if (hasTile)
+                    if (!alreadySpawned && filledTile)
                     {
-                        if (!alreadySpawned && filledTile)
-                        {
-                            GameObject grass = Instantiate(grassPrefab, transform);
-                            grass.transform.position = pos;
-                            spawnedPositions.Add(pos);
+                        GameObject grass = Instantiate(grassPrefab, transform);
+                        grass.transform.parent = spawnParent.transform;
+                        grass.transform.position = pos;                      
+                        spawnedPositions.Add(pos);
 
-                            SetGrassColor(grass);
+                        SetGrassColor(grass);
 
-                            if (!grassList.Contains(grass)) { grassList.Add(grass); }
-                        }
+                        if (!grassList.Contains(grass)) { grassList.Add(grass); }
                     }
-                    else
-                    {
-                        if (filledTile) { removedCellCount++; }
-                    }
+                }
+                else
+                {
+                    if (filledTile) { removedCellCount++; }
                 }
 
                 indexY++;             

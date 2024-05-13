@@ -54,9 +54,9 @@ namespace Enviro
             middleSprite.flipX = Random.value > .5f;
             bottomSprite.flipX = Random.value > .5f;
 
-            topGrass.transform.position = topGrass.transform.position + new Vector3(Random.Range(-.5f, .5f), 0f);
-            middleGrass.transform.position = middleGrass.transform.position + new Vector3(Random.Range(-.5f, .5f), 0f);
-            bottomGrass.transform.position = bottomGrass.transform.position + new Vector3(Random.Range(-.5f, .5f), 0f);
+            topGrass.transform.position = topGrass.transform.position + new Vector3(Random.Range(-.2f, .2f), 0f);
+            middleGrass.transform.position = middleGrass.transform.position + new Vector3(Random.Range(-.2f, .2f), 0f);
+            bottomGrass.transform.position = bottomGrass.transform.position + new Vector3(Random.Range(-.2f, .2f), 0f);
         }
 
         public void OnTriggerEnter2D(Collider2D collision)

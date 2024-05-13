@@ -162,7 +162,7 @@ public class CellularAutomata : MonoBehaviour
         }
     }
 
-    void ApplyPreviousArrayConstraints(int[,] constraintArray)
+    public void ApplyPreviousArrayConstraints(int[,] constraintArray)
     {
         if (constraintArray == null) { return; } // returns if no constraint map
 
