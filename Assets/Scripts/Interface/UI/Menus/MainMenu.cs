@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+
     public void ExitGame()
     {
         Debug.Log("Quitting Game");
@@ -17,7 +19,7 @@ public class MainMenu : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
-        Destroy(GameManager.Instance);
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
+        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("Persistents");
     }
 }

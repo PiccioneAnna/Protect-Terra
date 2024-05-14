@@ -18,7 +18,7 @@ namespace Player
         public GameObject _inventoryUI;
         public GameObject _craftingUI;
         public GameObject _equipmentUI;
-        public GameObject _menuUI;
+        public GameObject _pauseMenuUI;
 
         public Button _craftBtn;
         public Button _inventoryBtn;
@@ -29,7 +29,7 @@ namespace Player
         public bool isInventoryOpen = false;
         public bool isCraftingOpen = false;
         public bool isEquipmentOpen = false;
-        public bool isMenuOpen = false;
+        public bool isPauseMenuOpen = false;
 
         #endregion
 
@@ -93,6 +93,19 @@ namespace Player
             if (isEquipmentOpen) { HideInactive(false, false, true); }
             else { _equipmentUI.SetActive(false); }
         }
+        /// <summary>
+        /// Method for opening the pause menu
+        /// </summary>
+        protected void OpenPauseMenu()
+        {
+            if(_pauseMenuUI == null) { return; }
+
+            bool isOpen = _pauseMenuUI.activeSelf;
+
+            isPauseMenuOpen = !isOpen;
+
+            _pauseMenuUI.SetActive(isPauseMenuOpen);
+        }
         #endregion
 
         #region Checks
@@ -103,6 +116,8 @@ namespace Player
             isInventoryOpen = _inventoryUI.activeSelf;
             isCraftingOpen = _craftingUI.activeSelf;
             isEquipmentOpen = _equipmentUI.activeSelf;
+
+            isAnyUIOpen = isInventoryOpen || isCraftingOpen || isEquipmentOpen;
 
             if (isCraftingOpen) { _craftBtn.Select(); }
             if (isInventoryOpen) { _inventoryBtn.Select(); }
@@ -134,6 +149,12 @@ namespace Player
                 //Debug.Log("E Pressed");
                 OpenEquipMenu();
             }
+
+            if (Keyboard.current.escapeKey.wasReleasedThisFrame)
+            {
+                if (isAnyUIOpen) { CloseAnyUI(); }
+                else { OpenPauseMenu(); }
+            }
         }
         #endregion
 
@@ -148,6 +169,11 @@ namespace Player
             _inventoryUI.SetActive(inv);
             _craftingUI.SetActive(craft);
             _equipmentUI.SetActive(equip);
+        }
+        public void CloseAnyUI()
+        {
+            HideInactive(false, false, false);
+            SetInventoryContainer(false, false);
         }
         #endregion
     }
