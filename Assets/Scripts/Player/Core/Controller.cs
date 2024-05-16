@@ -14,7 +14,7 @@ namespace Player
         
         [HideInInspector] public Rigidbody2D _rb;
         [HideInInspector] public CapsuleCollider2D _collider;
-        [HideInInspector] public Animator _animator;
+        [HideInInspector] public AnimManager animator;
         [HideInInspector] public PlayerControls playerControls;
         
         [Header("Gameobject References")]
@@ -82,7 +82,7 @@ namespace Player
 
             _rb = GetComponent<Rigidbody2D>();
             _collider = GetComponent<CapsuleCollider2D>();
-            _animator = GetComponentInChildren<Animator>();
+            animator = GetComponentInChildren<AnimManager>();
             uiManager = GetComponent<UIManager>();
         }
 
@@ -107,6 +107,7 @@ namespace Player
         {
             // Movement related
             _moveDirection = move.ReadValue<Vector2>();
+            Animate();
 
             //HandleSelection();
             //RangedAttackMath();
@@ -165,6 +166,17 @@ namespace Player
         private void OnDisable()
         {
             move?.Disable();
+        }
+        #endregion
+
+        #region Animator Calls
+        public void Animate()
+        {
+            if (animator != null)
+            {
+                animator.dirValue = _moveDirection;
+                animator.UpdateAnimation();
+            }
         }
         #endregion
 
