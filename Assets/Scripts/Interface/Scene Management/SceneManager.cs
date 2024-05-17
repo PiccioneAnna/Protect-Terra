@@ -48,9 +48,6 @@ public class SceneManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.SetActiveScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(currentScene));
 
         screenTint.UnTint();
-
-        GameManager.Instance.FindTilemaps();
-        GameManager.Instance.cropsManager.FindCorrectTilemaps();
     }
 
     public void SwitchScene(string to, Vector3 targetPosition)
