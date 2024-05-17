@@ -30,6 +30,7 @@ namespace ToolActions
     public class EnviroHit : Base
     {
         [SerializeField] float sizeOfInteractableArea = 2;
+        [SerializeField] float grassCap = 5;
         [SerializeField] List<ResourceType> canHitNodesOfType;
 
         private Vector3 centerPoint;
@@ -49,30 +50,45 @@ namespace ToolActions
 
             if (player.character.isExhausted) { return false; }
 
-            foreach (Collider2D c in colliders)
-            {
-                Debug.Log(c.gameObject.name);
+            int index = 0;
 
-                if(c.gameObject.name == "Player") { break; }
+            foreach (Collider2D c in colliders)
+            {     
+                if(c.gameObject.name == "Player") { continue; }
 
                 // check prevents disabled objects from being interacted with
-                if (c.transform.gameObject.layer == LayerMask.NameToLayer("DisabledPhysics")) { break; }
-                if (c.transform.gameObject.layer == LayerMask.NameToLayer("Border")) { break; }
+                if (c.gameObject.layer == LayerMask.NameToLayer("Tilemap")) { continue; }
+                if (c.gameObject.layer == LayerMask.NameToLayer("Border")) { break; }
 
-                Debug.Log($"Collider found...{c.transform.gameObject.name}");
+                Debug.Log($"Collider found...{c.gameObject.name}");
 
-                var hit = c.transform.GetComponent<Resource>() != null ? c.transform.GetComponent<Resource>() : c.transform.GetComponentInParent<Resource>();
+                var hit = c.gameObject.GetComponent<Resource>() != null ? c.gameObject.GetComponent<Resource>() : c.gameObject.GetComponentInParent<Resource>();
+
+                Debug.Log(hit);
 
                 if (hit)
                 {
-                    Debug.Log("Resource Found");
+                    Debug.Log("Resource Found: " + hit.nodeType);
 
                     if (canHitNodesOfType.Contains(hit.nodeType))
                     {
                         Debug.Log("Enviro Hit");
                         hit.Hit();
-                        player.canDoAction = false;
-                        return true;
+
+                        if(hit.nodeType == ResourceType.Grass)
+                        {
+                            index++;
+                            if(index >= grassCap)
+                            {
+                                player.canDoAction = false;
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            player.canDoAction = false;
+                            return true;
+                        }
                     }
                 }
             }

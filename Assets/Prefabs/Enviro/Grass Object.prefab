@@ -129,7 +129,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_SortAtRoot: 1
 --- !u!1 &6650757426362708690
 GameObject:
@@ -346,6 +346,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b8f6c9f0d785e498537d546ab01e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  shadowRenderer: {fileID: 0}
+  healthBar: {fileID: 0}
+  healthValueText: {fileID: 0}
+  health:
+    maxVal: 1
+    currVal: 0
+  matchLayerNum: 1
+  nodeType: 0
+  droppedObjs: []
+  maxDropCount: 0
+  minDropCount: 0
   grass: {fileID: 0}
   anim: {fileID: 0}
   topGrass: {fileID: 2568130086623451490}
@@ -395,7 +408,7 @@ MonoBehaviour:
   - {fileID: -691813994, guid: 1d051c8042b88574e9ac81bcfe787419, type: 3}
   - {fileID: 1085513592, guid: 1d051c8042b88574e9ac81bcfe787419, type: 3}
   - {fileID: 158437114, guid: 1d051c8042b88574e9ac81bcfe787419, type: 3}
-  position: {x: 0, y: 0}
+  pos: {x: 0, y: 0}
 --- !u!95 &-6715302068481479667
 Animator:
   serializedVersion: 5

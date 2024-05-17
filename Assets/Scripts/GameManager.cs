@@ -48,12 +48,12 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject); // destroy the gameobject, this component is attached to
         }
 
-        //inventory = GetComponent<Inventory.Manager>();
-        //reader = GetComponent<Reader>();
-        //cropsManager = GetComponent<TilemapScripts.CropsManager>();
+        inventory = GetComponent<Inventory.Manager>();
+        reader = GetComponent<Reader>();
+        cropsManager = GetComponent<TilemapScripts.CropsManager>();
         timeController = GetComponent<TimeController>();
         //sceneManager = GetComponent<SceneManager>();
-        //screenMessageSystem = GetComponent<OnScreenMessageSystem>();
+        screenMessageSystem = GetComponent<OnScreenMessageSystem>();
         //placeableObjectsManager = GetComponent<PlaceableObjectsReferenceManager>();
     
     }
@@ -61,11 +61,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SetPosition();
+        FindTilemaps();
     }
 
     #endregion
 
-    public void SetPosition()
+    public void SetPosition() // fix spawn
     {
         tm = GameObject.Find("0").GetComponent<Tilemap>();
         Collider2D col = tm.gameObject.GetComponent<Collider2D>();

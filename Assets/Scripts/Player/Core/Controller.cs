@@ -29,6 +29,7 @@ namespace Player
         [HideInInspector] public MarkerManager markerManager;
         [HideInInspector] TilemapScripts.Reader tilemapReader;
         [HideInInspector] public static Controller controller;
+        [HideInInspector] public Character character;
         [HideInInspector] public UIManager uiManager;
 
         private InputAction move;
@@ -56,7 +57,6 @@ namespace Player
         private Vector2 _movementInput;
         private Vector2 _mousePos;
         private Vector2 _moveDirection = Vector2.zero;
-        public Character character;
         private float offsetDistance = 1.2f;
         public float passiveRegenE = .50f;
         public float passiveRegenH = .10f;
@@ -75,6 +75,7 @@ namespace Player
         private void Awake()
         {
             controller = this;
+            character = GetComponent<Character>();
             playerControls = new();
             maxDistance = sizeOfIA.x * sizeOfIA.y;
             selectedTiles = new List<Vector3Int>();
@@ -89,17 +90,17 @@ namespace Player
         // Start is called before the first frame update
         void Start()
         {
-            //gameManager = GameManager.Instance;
-            //actionTimer = 0f;
+            gameManager = GameManager.Instance;
+            actionTimer = 0f;
 
             //// Reference each manager in the GameManager
-            //inventoryManager = gameManager.inventory;
-            //tilemapReader = gameManager.reader;
-            //markerManager = gameManager.markerManager;
+            inventoryManager = gameManager.inventory;
+            tilemapReader = gameManager.reader;
+            markerManager = gameManager.markerManager;
 
-            //PickupItemList();
+            PickupItemList();
 
-            //HandleSelection();
+            HandleSelection();
         }
 
         // Update is called once per frame
@@ -109,53 +110,53 @@ namespace Player
             _moveDirection = move.ReadValue<Vector2>();
             Animate();
 
-            //HandleSelection();
-            //RangedAttackMath();
+            HandleSelection();
+            RangedAttackMath();
 
             uiManager.HandleUIInteractions();
 
-            //actionTimer += Time.deltaTime;
-            //if(actionTimer > _timeBetweenActions) 
-            //{  
-            //    canDoAction = true;
-            //    actionTimer = 0f;
-            //}
+            actionTimer += Time.deltaTime;
+            if (actionTimer > _timeBetweenActions)
+            {
+                canDoAction = true;
+                actionTimer = 0f;
+            }
         }
 
         void FixedUpdate()
         {
             ApplyMovement();
 
-            //// Passive Regen
-            //character.Rest(passiveRegenE);
-            //character.Heal(passiveRegenH);
+            // Passive Regen
+            character.Rest(passiveRegenE);
+            character.Heal(passiveRegenH);
 
-            //if (Input.GetMouseButtonDown(0))
-            //{
-            //    WeaponAction();
-            //}
+            if (Input.GetMouseButtonDown(0))
+            {
+                WeaponAction();
+            }
 
-            //if (Input.GetMouseButton(0))
-            //{
-            //    if (!isInteract && !isUIOpen && character.stamina.currVal > 0 && canDoAction)
-            //    {
-            //        if (!isInteract && !useGrid)
-            //        {
-            //            UseToolWorld();
-            //            character.GetTired(1);
-            //        }
-            //    }
-            //}
+            if (Input.GetMouseButton(0))
+            {
+                if (!isInteract && !isUIOpen && character.stamina.currVal > 0 && canDoAction)
+                {
+                    if (!isInteract && !useGrid)
+                    {
+                        UseToolWorld();
+                        character.GetTired(1);
+                    }
+                }
+            }
 
-            //if (Input.GetMouseButtonUp(0))
-            //{
-            //    if(selectedItem == null) { Interact(); }
-                
-            //    if (!isInteract && useGrid)
-            //    {
-            //        UseToolGrid();
-            //    }
-            //}
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (selectedItem == null) { Interact(); }
+
+                if (!isInteract && useGrid)
+                {
+                    UseToolGrid();
+                }
+            }
         }
 
         private void OnEnable()
@@ -308,7 +309,7 @@ namespace Player
         private void Marker()
         {
             markerManager.markedCellPosition = selectedTilePosition;
-            itemHighlight.cellPosition = selectedTilePosition;
+            //itemHighlight.cellPosition = selectedTilePosition;
 
             multiGrid = markerManager.isMultiple;
             place = markerManager.isPlace;
@@ -413,7 +414,7 @@ namespace Player
             Vector2 cameraPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             selectable = Vector2.Distance(characterPosition, cameraPosition) < maxDistance;
             markerManager.Show(selectable);
-            itemHighlight.CanSelect = selectable;
+            //itemHighlight.CanSelect = selectable;
         }
         #endregion
     }

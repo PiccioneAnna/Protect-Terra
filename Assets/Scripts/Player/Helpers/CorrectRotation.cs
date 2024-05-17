@@ -39,12 +39,12 @@ public class CorrectRotation : MonoBehaviour
         // Left
         if (q3 || q1)
         {
-            spriteRenderer.flipX = false;
+            spriteRenderer.flipX = true;
         }
         // Right
         else if (q2 || q4)
         {
-            spriteRenderer.flipX = true;
+            spriteRenderer.flipX = false;
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Enviro
 {
-    public class GrassObject : MonoBehaviour
+    public class GrassObject : Resource
     {
         #region Fields
 
@@ -21,7 +21,7 @@ namespace Enviro
         private SpriteRenderer bottomSprite;
 
         [Header("Grass Data")]
-        public Vector2 position;
+        public Vector2 pos;
 
         #endregion
 
@@ -31,10 +31,19 @@ namespace Enviro
         {
             grass = this;
             anim = GetComponent<Animator>();
+            animator = anim;
 
             topSprite = topGrass.GetComponent<SpriteRenderer>();
             middleSprite = middleGrass.GetComponent<SpriteRenderer>();
             bottomSprite = bottomGrass.GetComponent<SpriteRenderer>();
+
+            health.SetToMax();
+            random = new System.Random();
+            nodeType = ResourceType.Grass;
+
+            dropCount = random.Next(maxDropCount) + minDropCount + (int)transform.localScale.x;
+            position = transform.position;
+            rotation = transform.rotation;
 
             InitialSpawn();
         }
@@ -63,7 +72,6 @@ namespace Enviro
         {
             anim.SetTrigger("Shake");
         }
-
     }
 }
 

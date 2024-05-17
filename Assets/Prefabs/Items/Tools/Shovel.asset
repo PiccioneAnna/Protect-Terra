@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d864ca7e9147c4aa5f9a291cb6d6fa, type: 3}
+  m_Name: Shovel
+  m_EditorClassIdentifier: 
+  itemName: Shovel
+  id: 
+  itemType: 3
+  image: {fileID: -1786371493, guid: 5fd79e02b352efd4e8d659cb2e3168e2, type: 3}
+  usesGrid: 1
+  stackable: 0
+  iconHighlight: 0
+  isWeapon: 0
+  isMelee: 0
+  isRanged: 0
+  isConsumable: 0
+  damage: 2
+  tile: {fileID: 0}
+  obj: {fileID: 0}
+  crop: {fileID: 0}
+  treeN: {fileID: 0}
+  projectile: {fileID: 0}
+  recipe: {fileID: 0}
+  onAction: {fileID: 0}
+  onTileMapAction: {fileID: 11400000, guid: e580e2e6772c0a0479c697b2415a4ea9, type: 2}
+  onItemUsed: {fileID: 0}

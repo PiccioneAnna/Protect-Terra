@@ -41,15 +41,15 @@ namespace Player
         #region Runtime
         private void Start()
         {
-            //hp.currVal = hp.maxVal;
-            //stamina.currVal = stamina.maxVal;
-            //hunger.currVal = hunger.maxVal;
+            hp.currVal = hp.maxVal;
+            stamina.currVal = stamina.maxVal;
+            hunger.currVal = hunger.maxVal;
 
-            //spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-            //UpdateHPBar();
-            //UpdateStaminaBar();
-            //UpdateHungerBar();
+            UpdateHPBar();
+            UpdateStaminaBar();
+            UpdateHungerBar();
         }
         #endregion
 

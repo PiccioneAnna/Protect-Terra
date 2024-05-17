@@ -75,33 +75,38 @@ public class Resource : TimeAgent
     public void Hit()
     {
         health.currVal--;
-        UpdateHealthBar();
-        Shake();
+        Debug.Log("Hit Resource");
 
+        if(healthBar != null) { UpdateHealthBar(); }
+        if(animator != null) { Shake(); }
+        
         if (health.currVal <= 0)
         {
             Debug.Log("Drop Count:" + dropCount);
 
             for (int i = 0; i < dropCount; i++)
             {
-                drop = droppedObjs[random.Next(droppedObjs.Length)];
+                if (droppedObjs.Length > 0)
+                {
+                    drop = droppedObjs[random.Next(droppedObjs.Length)];
 
-                // Randomized drop positoning
-                offsetX = (float)random.NextDouble() / 2;
-                offsetY = (float)random.NextDouble() / 4;
-                multplierX = offsetX % 2 == 2 ? 1 : -1;
-                multplierY = offsetY % 2 == 2 ? 1 : -1;
+                    // Randomized drop positoning
+                    offsetX = (float)random.NextDouble() / 2;
+                    offsetY = (float)random.NextDouble() / 4;
+                    multplierX = offsetX % 2 == 2 ? 1 : -1;
+                    multplierY = offsetY % 2 == 2 ? 1 : -1;
 
-                // Randomized drop
-                position = new Vector3(position.x + (multplierX * offsetX), position.y + (multplierY * offsetY), position.z);
-                ItemSpawnManager.instance.SpawnItem(position, drop);
+                    // Randomized drop
+                    position = new Vector3(position.x + (multplierX * offsetX), position.y + (multplierY * offsetY), position.z);
+                    ItemSpawnManager.instance.SpawnItem(position, drop);
+                }
             }
 
-            GameManager.Instance.FindEnviroSpawner();
-            if (GameManager.Instance.enviroSpawner.spawnedObjects.Contains(gameObject))
-            {
-                GameManager.Instance.enviroSpawner.spawnedObjects.Remove(gameObject);
-            }
+            //GameManager.Instance.FindEnviroSpawner();
+            //if (GameManager.Instance.enviroSpawner.spawnedObjects.Contains(gameObject))
+            //{
+            //    GameManager.Instance.enviroSpawner.spawnedObjects.Remove(gameObject);
+            //}
 
             Destroy(gameObject);
         }
