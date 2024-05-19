@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static EnviroManager;
 
 public class GrassSpawner : TimeAgent
 {
@@ -18,6 +19,7 @@ public class GrassSpawner : TimeAgent
     public List<GameObject> grassList;
 
     private CellularAutomata cellularAutomata;
+    private EnviroManager enviroManager;
     [HideInInspector] public int _width;
     [HideInInspector] public int _height;
 
@@ -58,6 +60,7 @@ public class GrassSpawner : TimeAgent
         totalCellCount = TilemapGenerator.GetTilemapTileCount(refTilemap);
 
         cellularAutomata = GetComponent<CellularAutomata>();
+        enviroManager = GameManager.Instance.enviroManager;
 
         SetGradient();
 
@@ -82,7 +85,7 @@ public class GrassSpawner : TimeAgent
 
     public void SpawnGrass()
     {
-        Vector3Int pos;
+        Vector2 pos;
         int indexX = 0;
         int indexY = 0;
         removedCellCount = 0;
@@ -91,10 +94,10 @@ public class GrassSpawner : TimeAgent
         {
             for (int y = bounds.min.y; y < bounds.max.y; y++)
             {
-                pos = new Vector3Int(x, y, 0);
+                pos = new Vector2(x, y);
                 bool hasTile = refTilemap.HasTile(new Vector3Int(x, y, 0));
                 bool inBounds = (indexX < _width && indexY < _height);
-                bool alreadySpawned = spawnedPositions.Contains(pos);
+                bool alreadySpawned = enviroManager.CheckObjectPosition(pos);
 
                 if(!inBounds || alreadySpawned) { break; }
 
@@ -106,12 +109,15 @@ public class GrassSpawner : TimeAgent
                     {
                         GameObject grass = Instantiate(grassPrefab, transform);
                         grass.transform.parent = spawnParent.transform;
-                        grass.transform.position = pos;                      
-                        spawnedPositions.Add(pos);
+                        grass.transform.position = pos; 
 
                         SetGrassColor(grass);
 
-                        if (!grassList.Contains(grass)) { grassList.Add(grass); }
+                        ObjectInfo objectInfo = CreateGrassObject(pos, grass);
+                        if (!enviroManager.spawnedObjects.Contains(objectInfo))
+                        {
+                            enviroManager.spawnedObjects.Add(objectInfo);
+                        }                      
                     }
                 }
                 else
@@ -177,6 +183,18 @@ public class GrassSpawner : TimeAgent
         alphas[1] = new GradientAlphaKey(0.75f, 1.0f);
 
         gradient.SetKeys(colors, alphas);
+    }
+
+    private ObjectInfo CreateGrassObject(Vector2 position, GameObject o)
+    {
+        ObjectInfo objectInfo = new()
+        {
+            position = position,
+            obj = o,
+            objectType = ObjectType.Grass
+        };
+
+        return objectInfo;
     }
 
     #endregion

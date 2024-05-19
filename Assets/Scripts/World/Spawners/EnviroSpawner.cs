@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
+using static EnviroManager;
 
 public class EnviroSpawner : MonoBehaviour
 {
@@ -11,14 +13,17 @@ public class EnviroSpawner : MonoBehaviour
     public int spawnCount;
 
     [HideInInspector] public EnviroSpawner enviroSpawner;
-    public PolygonCollider2D spawnArea;
+    [HideInInspector] public EnviroManager enviroManager;
+    [Header("Components")]
+    public Tilemap refTilemap;
+    public GameObject spawnParent;
 
     [Header("Spawnable Objects")]
     public GameObject[] objects;
     public List<GameObject> spawnedObjects;
     public float minScale = .5f;
     public float maxScale = 2.5f;
-    public int layer = 0;
+    public int layer = 2;
 
     private Vector3 position;
     private Quaternion rotation;
@@ -26,15 +31,14 @@ public class EnviroSpawner : MonoBehaviour
 
     private System.Random random;
 
-    Bounds colliderBounds;
-    Vector3 colliderCenter;
-    float[] ranges;
+    BoundsInt bounds;
     [HideInInspector] public List<Vector2> takenPositions;
 
     // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
         enviroSpawner = this;
+        enviroManager = GameManager.Instance.enviroManager;
 
         CreateBounds();
 
@@ -54,58 +58,50 @@ public class EnviroSpawner : MonoBehaviour
         EnumHelper.SetSortingOrderAllChildren(spawnedObjects, layer);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public GameObject SpawnObject(GameObject go, Vector3Int pos = new Vector3Int())
     {
         RandomPosition();
         RandomScale();
 
-        position = pos != default ? (Vector3)pos : position;
+        position = pos != default ? pos : position;
 
         // Doesn't spawn if already object
-        if (takenPositions.Contains(position))
+        if (enviroManager.CheckObjectPosition(position))
         {
             return null;
         }
 
-        takenPositions.Add(position);
-
         GameObject temp = Instantiate(go, new Vector3(position.x + .5f, position.y + .5f, 0) + transform.position, rotation, this.transform);
         temp.transform.localScale = scale;
+        temp.transform.parent = spawnParent.transform;
 
         if(temp.TryGetComponent(out TreeNode tre))
         {
             tre.PreExistingTreeNode();
         }
 
-        spawnedObjects.Add(temp);
+        enviroManager.spawnedObjects.Add(CreateResourceObject(position, temp));
 
         return temp;
     }
 
     public GameObject NewTreeObject(GameObject go, Vector3Int pos = new Vector3Int())
     {
-        position = pos != default ? (Vector3)pos : position;
+        position = pos != default ? pos : position;
 
         // Doesn't spawn if already object
-        if (takenPositions.Contains(position))
+        if (enviroManager.CheckObjectPosition(position))
         {
             return null;
         }
 
-        takenPositions.Add(position);
-
         GameObject temp = Instantiate(go, new Vector3(position.x + .5f, position.y + .5f, 0) + transform.position, rotation, this.transform);
         temp.transform.localScale = scale;
+        temp.transform.parent = spawnParent.transform;
 
         temp.GetComponent<TreeNode>().NewTreeNode();
 
-        spawnedObjects.Add(temp);
+        enviroManager.spawnedObjects.Add(CreateResourceObject(position, temp));
 
         return temp;
     }
@@ -120,8 +116,8 @@ public class EnviroSpawner : MonoBehaviour
 
     private void RandomPosition()
     {
-        float randomX = Random.Range(ranges[0], ranges[1]);
-        float randomY = Random.Range(ranges[2], ranges[3]);
+        float randomX = Random.Range(bounds.min.x, bounds.max.x);
+        float randomY = Random.Range(bounds.min.y, bounds.max.y);
 
         position = new Vector2((int)randomX + .5f, (int)randomY + .5f);
     }
@@ -143,21 +139,20 @@ public class EnviroSpawner : MonoBehaviour
 
     private void CreateBounds()
     {
-        colliderBounds = spawnArea.bounds;
-        colliderCenter = colliderBounds.center;
+        bounds = TilemapGenerator.ReturnTilemapInfo(refTilemap);
+    }
 
-        ranges = new float[]{
-            colliderCenter.x - colliderBounds.extents.x,
-            colliderCenter.x + colliderBounds.extents.x,
-            colliderCenter.y - colliderBounds.extents.y,
-            colliderCenter.y + colliderBounds.extents.y,
+    private ObjectInfo CreateResourceObject(Vector2 pos, GameObject o)
+    {
+        ObjectInfo objectInfo = new()
+        {
+            position = pos,
+            obj = o,
+            objectType = ObjectType.Resource
         };
 
-        position = transform.position;
-        rotation = transform.rotation;
+        return objectInfo;
     }
 
     #endregion
-
-
 }

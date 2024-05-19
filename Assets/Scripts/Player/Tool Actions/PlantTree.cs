@@ -14,9 +14,7 @@ namespace ToolAction
         {
             if (!item.treeN) { return false; }
 
-            if (GameManager.Instance.enviroSpawner == null) { GameManager.Instance.FindEnviroSpawner(); }
-
-            spawnedTree = GameManager.Instance.enviroSpawner.NewTreeObject(item.treeN, gridPosition);
+            spawnedTree = GameManager.Instance.enviroManager.enviroSpawner.NewTreeObject(item.treeN, gridPosition);
 
             if (spawnedTree == null) {  return false; }
 

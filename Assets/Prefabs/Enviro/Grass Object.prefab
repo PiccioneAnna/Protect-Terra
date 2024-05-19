@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b8f6c9f0d785e498537d546ab01e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: -6715302068481479667}
   spriteRenderer: {fileID: 0}
   shadowRenderer: {fileID: 0}
   healthBar: {fileID: 0}

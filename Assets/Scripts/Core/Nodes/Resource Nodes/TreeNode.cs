@@ -73,9 +73,7 @@ public class TreeNode : Resource
         currStage = children[stageIndex];
         growTimer = currStage.time;
 
-        if(GameManager.Instance.enviroSpawner == null) { GameManager.Instance.FindEnviroSpawner(); }
-
-        spriteRenderer.sortingOrder = GameManager.Instance.enviroSpawner.layer;
+        spriteRenderer.sortingOrder = GameManager.Instance.enviroManager.layer;
 
         PopulateRoot();
         SetSpriteLayers();

@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public MarkerManager markerManager;
 
     [Header("Scene Specific")]
-    public EnviroSpawner enviroSpawner;
+    public EnviroManager enviroManager;
     public Tilemap tm;
 
     [Header("Global")]
@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public Inventory.Manager inventory;
     [HideInInspector] public TilemapScripts.CropsManager cropsManager;
     [HideInInspector] public TimeController timeController;
-    [HideInInspector] public SceneManager sceneManager;
     [HideInInspector] public OnScreenMessageSystem screenMessageSystem;
+    [HideInInspector] public SceneManager sceneManager;
     [HideInInspector] public PlaceableObjectsReferenceManager placeableObjectsManager;
 
     #endregion
@@ -52,9 +52,8 @@ public class GameManager : MonoBehaviour
         reader = GetComponent<Reader>();
         cropsManager = GetComponent<TilemapScripts.CropsManager>();
         timeController = GetComponent<TimeController>();
-        //sceneManager = GetComponent<SceneManager>();
         screenMessageSystem = GetComponent<OnScreenMessageSystem>();
-        //placeableObjectsManager = GetComponent<PlaceableObjectsReferenceManager>();
+        placeableObjectsManager = GetComponent<PlaceableObjectsReferenceManager>();
     
     }
 
@@ -72,7 +71,11 @@ public class GameManager : MonoBehaviour
         Collider2D col = tm.gameObject.GetComponent<Collider2D>();
 
         Vector3 pos = new Vector3Int(75, 75, 0);
-        pos = col.ClosestPoint(pos);
+
+        while (!col.bounds.Contains(pos))
+        {
+            pos = col.ClosestPoint(pos) - new Vector2(0.5f, 0.5f);
+        }
 
         player.gameObject.transform.position = pos;
     }
@@ -86,11 +89,6 @@ public class GameManager : MonoBehaviour
         if (grid == null) { return; }
 
         tilemapInfoManager = grid.GetComponent<TilemapInfoManager>();
-    }
-
-    public void FindEnviroSpawner()
-    {
-        enviroSpawner = FindAnyObjectByType<EnviroSpawner>();
     }
 
     #endregion

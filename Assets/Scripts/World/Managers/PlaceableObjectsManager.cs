@@ -9,7 +9,6 @@ public class PlaceableObjectsManager : MonoBehaviour
 {
     [SerializeField] Inventory.PlaceableObjectsContainer placeableObjects;
     [SerializeField] Tilemap targetTilemap;
-    [SerializeField] GameObject objPrefab;
 
     private void Start()
     {
@@ -35,10 +34,9 @@ public class PlaceableObjectsManager : MonoBehaviour
 
     public void VisualizeItem(PlaceableObject placeableObject)
     {
-        GameObject go = Instantiate(objPrefab);
+        GameObject go = Instantiate(placeableObject.placedItem.obj);
         Vector3 position = targetTilemap.CellToWorld(placeableObject.positionOnGrid);
-        position = position + new Vector3(0, targetTilemap.cellSize.y, -1);
-        go.transform.position = position;
+        go.transform.position = position + new Vector3(0.5f, 0.5f, 0f);
 
         placeableObject.targetObject = go.transform;
     }

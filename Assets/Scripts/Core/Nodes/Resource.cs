@@ -25,7 +25,7 @@ public class Resource : TimeAgent
     public Item[] droppedObjs;
     protected Item drop;
     protected System.Random random;
-    protected Vector3 position;
+    protected Vector2 position;
     protected Quaternion rotation;
     protected float offsetX, offsetY;
     protected int multplierX, multplierY;
@@ -39,6 +39,7 @@ public class Resource : TimeAgent
     void Start()
     {
         health.SetToMax();
+        UpdateHealthBar();
         random = new System.Random();
 
         dropCount = random.Next(maxDropCount) + minDropCount + (int)transform.localScale.x;
@@ -86,7 +87,7 @@ public class Resource : TimeAgent
 
             for (int i = 0; i < dropCount; i++)
             {
-                if (droppedObjs.Length > 0)
+                if (droppedObjs != null && droppedObjs.Length > 0)
                 {
                     drop = droppedObjs[random.Next(droppedObjs.Length)];
 
@@ -97,16 +98,15 @@ public class Resource : TimeAgent
                     multplierY = offsetY % 2 == 2 ? 1 : -1;
 
                     // Randomized drop
-                    position = new Vector3(position.x + (multplierX * offsetX), position.y + (multplierY * offsetY), position.z);
+                    position = new Vector3(position.x + (multplierX * offsetX), position.y + (multplierY * offsetY));
                     ItemSpawnManager.instance.SpawnItem(position, drop);
                 }
             }
 
-            //GameManager.Instance.FindEnviroSpawner();
-            //if (GameManager.Instance.enviroSpawner.spawnedObjects.Contains(gameObject))
-            //{
-            //    GameManager.Instance.enviroSpawner.spawnedObjects.Remove(gameObject);
-            //}
+            if (GameManager.Instance.enviroManager.CheckObjectPosition(position))
+            {
+                GameManager.Instance.enviroManager.RemoveAtPos(position);
+            }
 
             Destroy(gameObject);
         }
